@@ -106,6 +106,12 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/recommanded_item", async (req, res) => {
+      const item = req.body;
+      const result = await cartCollection.insertOne(item);
+      res.send(result);
+    });
+
     // Get menu items based on spacific user...
 
     app.get("/cart", verifyJWT, async (req, res) => {
@@ -264,6 +270,14 @@ async function run() {
       const deleteResult = await cartCollection.deleteMany(query);
 
       res.send({insetResult, deleteResult});
+    })
+
+    // Get payment history based on specific user
+    app.get('/payment/:email', async(req, res)=>{
+      const email = req.params.email;
+      const query = {email : email};
+      const result = await paymentCollection.findOne(query);
+      res.send(result);
     })
 
     // Send a ping to confirm a successful connection
