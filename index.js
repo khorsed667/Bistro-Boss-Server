@@ -275,8 +275,9 @@ async function run() {
     // Get payment history based on specific user
     app.get('/payment/:email', async(req, res)=>{
       const email = req.params.email;
+      console.log(email);
       const query = {email : email};
-      const result = await paymentCollection.findOne(query);
+      const result = await paymentCollection.find(query).toArray();
       res.send(result);
     })
 
